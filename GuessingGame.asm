@@ -69,7 +69,7 @@ NEWLINE			LDI R5, DSR
 			STI R6, DDR
 			RET
 
-
+;Calculates the length of the word needed to guess.
 LENGTH 			AND R3, R3, #0
 			LEA R0, WORDTOGUESS
 LLOOP 			LDR R1, R0, #0		
@@ -80,6 +80,7 @@ LLOOP 			LDR R1, R0, #0
 ENDLENGTH 		STI R3, GUESSEDSTORAGE
 			RET
 
+;Checks win condition.
 CHECKWIN		LDI R6, CORRECTSTORAGE	
 			LDI R4, GUESSEDSTORAGE
 			NOT R4, R4
