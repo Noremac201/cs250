@@ -1,0 +1,34 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	Main              3000
+//	EXIT              3001
+//	PutMap            3002
+//	MapLoop           3004
+//	MoveRow           300B
+//	MapExit           3010
+//	Get               3011
+//	Update            3015
+//	NewLine           3016
+//	SAVE1             301B
+//	SAVE2             301C
+//	SAVE3             301D
+//	SAVE4             301E
+//	DSR               301F
+//	DDR               3020
+//	KBSR              3021
+//	KBDR              3022
+//	NewChar           3023
+//	CharSym           3024
+//	X                 3025
+//	Y                 3026
+//	UP                3027
+//	DOWN              3028
+//	LEFT              3029
+//	RIGHT             302A
+//	QUIT              302B
+//	MapRows           302C
+//	MapCols           302D
+//	TheMap            302E
+
