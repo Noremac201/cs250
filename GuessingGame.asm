@@ -1,102 +1,97 @@
-;R0 - string to be put
-;R1 - Temporary Variable
-;R6 - Location of Guessed String
-.orig x3000
+.ORIG X3000
 
-	jsr Length 
-Main jsr Output
-	LEA R0, CharAsk
-	jsr Put
-	jsr Get
-	jsr NewLine
-	jsr Check
-	jsr	CheckWin 
-	br Main
+			JSR LENGTH  ;finds length of string to be guessed.
+MAIN 		JSR OUTPUT  
+			LEA R0, CHARASK
+			JSR PUT
+			JSR GET
+			JSR NEWLINE
+			JSR CHECK
+			JSR	CHECKWIN 
+			BR MAIN
 
-Output LEA R0, Prompt
-	LEA R6, GuessedWord
-	STI R7, JSRStorage 
-	jsr Put
-	AND R0, R0, #0
-	ADD R0, R6, #0
-	jsr Put
-	jsr NewLine
-	LDI R7, JSRStorage
-	ret
+OUTPUT 		LEA R0, PROMPT
+			LEA R6, GUESSEDWORD
+			STI R7, JSRSTORAGE 
+			JSR PUT
+			AND R0, R0, #0
+			ADD R0, R6, #0
+			JSR PUT
+			JSR NEWLINE
+			LDI R7, JSRSTORAGE
+			RET
 
-Check AND R2, R2, #0 ;Counting Variable
-	LEA R6, WordToGuess
-CheckLoop	LDR R3, R6, #0	 
-	BRz EndCheck 
-	AND R1, R1, #0
-	ADD R1, R0, #0
-	NOT R1, R1
-	ADD R1, R1, #1
-	ADD R1, R3, R1
-	BRnp NotMatch 
-	LEA R4, GuessedWord ;if it does match
-	ADD R4, R2, R4 
-	STR R0,R4,#0
-	STI R0,GuessedWord
-	LDI R5, CorrectStorage
-	ADD R5, R5, #1 
-	STI R5,CorrectStorage
-NotMatch ADD R2, R2, #1 ;increment counter 
-	ADD R6, R6, #1
-	BRnzp CheckLoop
-EndCheck	ret
+CHECK 		AND R2, R2, #0 ;COUNTING VARIABLE
+			LEA R6, WORDTOGUESS
+			LDI R5, CORRECTSTORAGE
+CHECKLOOP	LDR R3, R6, #0	 
+			BRZ ENDCHECK 
+			AND R1, R1, #0
+			ADD R1, R0, #0
+			NOT R1, R1
+			ADD R1, R1, #1
+			ADD R1, R3, R1
+			BRNP NOMATCH 
+			LEA R4, GUESSEDWORD ;IF IT DOES MATCH
+			ADD R4, R2, R4 
+			STR R0,R4,#0
+			STI R0,GUESSEDWORD
+			ADD R5, R5, #1  ;adds to correct guess count. 
+			STI R5,CORRECTSTORAGE
+NOMATCH 	ADD R2, R2, #1 ;INCREMENT COUNTER 
+			ADD R6, R6, #1
+			BRNZP CHECKLOOP
+ENDCHECK	STI R5,CORRECTSTORAGE
+			RET
 
-;R0 holds ADDress of string to be Put
-Put	ldi r1, DSR
-	brzp Put
-	ldr r2, r0, #0	;load string element into R2	
-	brz EndPut  	;if string is done, return
-	sti r2, DDR
-	ADD r0, r0, #1
-	br Put
-EndPut	ret	
+;R0 HOLDS ADDRESS OF STRING TO BE PUT
+PUT			LDI R1, DSR
+			BRZP PUT
+			LDR R2, R0, #0	;LOAD STRING ELEMENT INTO R2	
+			BRZ ENDPUT  	;IF STRING IS DONE, RETURN
+			STI R2, DDR
+			ADD R0, R0, #1
+			BR PUT
+ENDPUT		RET	
 
 
-;R0 will hold value read from keyboard
-Get	ldi r1, KBSR
-	brzp Get
-	ldi r0, KBDR
-	sti r0, DDR
-	ret
+;R0 WILL HOLD VALUE READ FROM KEYBOARD
+GET			LDI R1, KBSR
+			BRZP GET
+			LDI R0, KBDR
+			STI R0, DDR
+			RET
 
-;prints new line 
-NewLine	ldi r5, DSR
-	brzp NewLine
-	ld r6, NewChar
-	sti r6, DDR
-	ret
+;PRINTS NEW LINE 
+NEWLINE		LDI R5, DSR
+			BRZP NEWLINE
+			LD R6, NEWCHAR
+			STI R6, DDR
+			RET
 
 
-LENGTH 	AND R3, R3, #0
-		LEA R0, WordToGuess
-LLoop 	LDR R1, R0, #0		
-		BRZ endLength
-		ADD R3, R3, #1 ;increment string length counter
-		ADD R0, R0, #1 ;iterate thru string.
-		BR LLoop
-ENDLength STI R3, GuessedStorage
-		ret
+LENGTH 		AND R3, R3, #0
+			LEA R0, WORDTOGUESS
+LLOOP 		LDR R1, R0, #0		
+			BRZ ENDLENGTH
+			ADD R3, R3, #1 ;INCREMENT STRING LENGTH COUNTER
+			ADD R0, R0, #1 ;ITERATE THRU STRING.
+			BR LLOOP
+ENDLENGTH 	STI R3, GUESSEDSTORAGE
+			RET
 
-CheckWin	LDI R5, CorrectStorage
-	LDI R4, GuessedStorage
-	NOT R4, R4
-	ADD R4, R4, #1
-	ADD R5, R4, R5
-	brnp notwin
-Win	LEA R0, Prompt
-	jsr Put
-	LEA R0, GuessedWord
-	jsr Put
-	jsr NewLine	
-	LEA R0, WinStr
-	jsr Put
-	HALT
-notwin ret
+CHECKWIN	LDI R6, CORRECTSTORAGE
+			LDI R4, GUESSEDSTORAGE
+			NOT R4, R4
+			ADD R4, R4, #1
+			ADD R6, R4, R6 
+			BRNP NOTWIN ;compares the guessed word with correct word.
+WIN			JSR OUTPUT
+			JSR NEWLINE	
+			LEA R0, WINSTR
+			JSR PUT
+			HALT
+NOTWIN 		RET
 	
 
 

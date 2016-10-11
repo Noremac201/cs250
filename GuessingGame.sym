@@ -1,0 +1,34 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	MAIN              3001
+//	OUTPUT            3009
+//	CHECK             3013
+//	CHECKLOOP         3016
+//	NOMATCH           3024
+//	ENDCHECK          3027
+//	PUT               3029
+//	ENDPUT            3030
+//	GET               3031
+//	NEWLINE           3036
+//	LENGTH            303B
+//	LLOOP             303D
+//	ENDLENGTH         3042
+//	CHECKWIN          3044
+//	WIN               304A
+//	NOTWIN            304F
+//	WordToGuess       3050
+//	GuessedWord       3056
+//	CorrectStorage    305C
+//	GuessedStorage    305D
+//	JSRStorage        305E
+//	Prompt            305F
+//	CharAsk           3067
+//	WinStr            306E
+//	DSR               3077
+//	DDR               3078
+//	KBSR              3079
+//	KBDR              307A
+//	NewChar           307B
+
