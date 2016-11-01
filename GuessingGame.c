@@ -3,12 +3,15 @@
 #include<time.h>
 #include<stdlib.h>
 
-int checkChar(char * , char * , char);
-void output(char * , char * , int);
-void checkWin(int);
 char * selectWord(char *);
+void checkWin(int);
+int checkChar(char *, char *, char );
+void output(char *, char *, int);
+
+
 
 int row, col;
+	int numGuessed = 0;
     char blankWord[25];
     char * guessedWord;
 	char guessedLetters[26];
@@ -23,7 +26,7 @@ int main(int argc, char *argv[]) {
 
 	initscr();
 	noecho();
-	curs_set(2);
+	curs_set(0);
 	getmaxyx(stdscr, row, col);
     mvprintw(row/2,(col-strlen(prompt))/2, "%s", prompt);
 	guessedWord = selectWord(argv[1]);
@@ -46,7 +49,7 @@ int main(int argc, char *argv[]) {
 	
 	clear();	
     checkWin(count);
-	curs_set(0);
+	//curs_set(0);
 	free(guessedWord);
 	
 	getch();
@@ -90,6 +93,7 @@ void checkWin(int count) {
 void output(char * guessedWord, char * blankWord, int count) {
     mvprintw(row/4,(col-strlen(blankWord))/2, "%s", blankWord);
     mvprintw((row/4) + 2,(col-strlen(guessesLeft))/2, "%s%d", guessesLeft, count);
+    mvprintw(row-2,0, "%s", guessedLetters);
     move(row/2,(col+strlen(charPrompt)+1)/2);
 }
 
@@ -102,5 +106,6 @@ int checkChar(char * guessedWord, char * blankWord, char c) {
             check++;
         }
     }
+	guessedLetters[numGuessed++] = c;	
     return check; 
 }
